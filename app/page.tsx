@@ -1,9 +1,33 @@
-import Image from 'next/image'
+"use client";
+
+import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const [inputValue, setInputValue] = useState("");
+  const {push} = useRouter()
+
+  const handleSubmit = (event: FormEvent ) => {
+    event.preventDefault();
+    push(`/prediction/${inputValue}`)
+  }
+
+  
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-     
-    </main>
+    <div>
+      <div>
+        <h1>Enter Your Name</h1>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <input 
+        type="text" 
+        placeholder="Type your name..." 
+        className="text-black"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button type="submit">Predict data</button>
+      </form>
+    </div>
   )
 }
